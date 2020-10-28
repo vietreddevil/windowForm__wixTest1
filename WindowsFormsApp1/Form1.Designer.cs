@@ -45,10 +45,10 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.ImageLocation = "https://images-na.ssl-images-amazon.com/images/I/51Lt7h7nReL._AC_SX466_.jpg";
-            this.pictureBox1.Location = new System.Drawing.Point(257, 79);
+            this.pictureBox1.ImageLocation = "https://cdn.pose.com.vn/assets/2019/02/27/may_lily_47689998_2003041526662308_4356240748385774162_n.jpg";
+            this.pictureBox1.Location = new System.Drawing.Point(236, 77);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(279, 349);
+            this.pictureBox1.Size = new System.Drawing.Size(301, 349);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
@@ -61,7 +61,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.button1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Phương Ly <3 <3 <3 <3 <4 <5";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
