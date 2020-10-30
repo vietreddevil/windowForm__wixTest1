@@ -19,9 +19,13 @@
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="MyExitDialog.wxs" />
+    <Compile Include="MyInstallDirDlg.wxs" />
     <Compile Include="Product.wxs" />
+    <Compile Include="MyWixUI_InstallDir.wxs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="a.bat" />
     <Content Include="EULA.rtf" />
     <Content Include="icon.ico" />
     <Content Include="SetupProject1.wax" />

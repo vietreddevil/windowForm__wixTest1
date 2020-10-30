@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"><?define WindowsFormsApp1_TargetDir=$(var.WindowsFormsApp1.TargetDir)?>
-	<Product Id="c766d27d-e56c-4ef0-8a8c-8bf9129d901c" Name="PhuongLyApp" Language="1033" Version="1.0.3.2" Manufacturer="ES" UpgradeCode="87793c10-626a-496e-a1e9-ee2f0a2ed417">
+	<Product Id="f7494443-bd9d-413e-8167-53ff8b589984" Name="PhuongLyApp" Language="1033" Version="1.0.5.2" Manufacturer="ES" UpgradeCode="87793c10-626a-496e-a1e9-ee2f0a2ed417">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 		<Icon Id="icon.ico" SourceFile="$(var.ProjectDir)Icon.ico" />
 		<Property Id="ARPPRODUCTICON" Value="icon.ico" />
@@ -8,15 +8,30 @@
 		<WixVariable Id="WixUIDialogBmp" Value="Images\installer_background.bmp" />
     <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)\EULA.rtf" />
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER"/>
-    <UIRef Id="WixUI_InstallDir" />
+    <Property Id="INSTALLDESKTOPSHORTCUT" Value="1" />
+    <Property Id="INSTALLSTARTMENUSHORTCUT" Value="1" />
+    <UIRef Id="MyWixUI_InstallDir" />
 		<MajorUpgrade Schedule="afterInstallInitialize" DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
-		<MediaTemplate />
+		<MediaTemplate  EmbedCab="yes"/>
 
 		<Feature Id="ProductFeature" Title="PhuongLyApp" Level="1">
 			<ComponentGroupRef Id="ProductComponents" />
       <ComponentRef Id="ApplicationShortcut" />
       <ComponentRef Id="ApplicationShortcutDesktop" />
 		</Feature>
+    
+    <CustomAction Id="test"
+    ExeCommand="[SystemFolder]cmd.exe /C pause"
+    Directory="INSTALLFOLDER" Execute="deferred" Return="asyncWait"/>
+     
+    <InstallExecuteSequence>
+      <Custom Action="test" After="InstallFiles">NOT Installed</Custom>
+    </InstallExecuteSequence>
+  
+    <CustomAction Id="LaunchApplication" FileKey="WindowsFormsApp1.exe" ExeCommand="" Execute="immediate" Impersonate="yes" Return="asyncNoWait" />
+    <UI>
+      <Publish Dialog="MyExitDialog" Control="Finish" Order="1" Event="DoAction" Value="LaunchApplication">LAUNCHAPPONEXIT</Publish>
+    </UI>
 	</Product>
 
 	<Fragment>
@@ -36,6 +51,7 @@
     <!--shortcut & start menu -->
     <DirectoryRef Id="ApplicationProgramsFolder">
       <Component Id="ApplicationShortcut" Guid="9bd13330-6540-406f-a3a8-d7f7c69ae7f9">
+        <Condition>INSTALLSTARTMENUSHORTCUT</Condition>
         <Shortcut Id="ApplicationStartMenuShortcut" Name="PhuongLyApp" Description="PhuongLyApp" Target="[INSTALLFOLDER]WindowsFormsApp1.exe" WorkingDirectory="INSTALLFOLDER" />
         <RemoveFolder Id="RemoveApplicationProgramsFolder" Directory="ApplicationProgramsFolder" On="uninstall" />
         <RegistryValue Root="HKCU" Key="Software\WindowsFormsApp1" Name="installed" Type="integer" Value="1" KeyPath="yes" />
@@ -44,6 +60,7 @@
     <!--Desktop-->
     <DirectoryRef Id="DesktopFolder">
      <Component Id="ApplicationShortcutDesktop" Guid="cde1e030-eb64-49a5-b7b8-400b379c2d1a">
+       <Condition>INSTALLDESKTOPSHORTCUT</Condition>
        <Shortcut Id="ApplicationDesktopShortcut" Name="PhuongLyApp" Description="PhuongLyApp" Target="[INSTALLFOLDER]WindowsFormsApp1.exe" WorkingDirectory="INSTALLFOLDER" />
         <RemoveFolder Id="RemoveDesktopFolder" Directory="DesktopFolder" On="uninstall" />
         <RegistryValue Root="HKCU" Key="Software\WindowsFormsApp1" Name="installed" Type="integer" Value="1" KeyPath="yes" />
